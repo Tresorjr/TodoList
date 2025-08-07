@@ -1,34 +1,43 @@
-<a href="{% url 'main' %}">Go to Second Page</a>
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
-    <link rel="stylesheet" href="main.css">
+  <meta charset="UTF-8">
+  <title>Register Form</title>
+  <link rel="stylesheet" href="{% static 'manage_users/main.css' %}">
 </head>
 <body>
-    <div class="register-container">
-        <form class="register-form" action="#" method="post">
-            <h2>Create Account</h2>
+  <div class="form-container">
+    <h2>Register</h2>
+    <form action="#" method="POST">
+      <div class="input-group">
+        <label for="first-name">First Name</label>
+        <input type="text" id="first-name" name="first_name" required>
+      </div>
 
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username" required>
+      <div class="input-group">
+        <label for="last-name">Last Name</label>
+        <input type="text" id="last-name" name="last_name" required>
+      </div>
 
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" required>
+      <div class="input-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required>
+      </div>
 
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" required>
+      <div class="input-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required>
+      </div>
 
-            <label for="confirm-password">Confirm Password</label>
-            <input type="password" id="confirm-password" name="confirm_password" required>
+      <div class="input-group">
+        <label for="role">Role / Description</label>
+        <textarea id="role" name="role" rows="3" placeholder="e.g., Admin, Student, Manager..." required></textarea>
+      </div>
 
-            <button type="submit">Register</button>
-
-            <p>Already have an account? <a href="login.html">Login here</a></p>
-        </form>
-    </div>
+      <button type="submit">Register</button>
+    </form>
+  </div>
 </body>
 </html>
 

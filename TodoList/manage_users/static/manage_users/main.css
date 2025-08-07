@@ -1,76 +1,68 @@
-/* Basic reset */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f4f6f9;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
+  background: #f2f2f2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
-.register-container {
-    background-color: white;
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 400px;
+.form-container {
+  background: #fff;
+  padding: 30px 40px;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 400px;
 }
 
-.register-form h2 {
-    text-align: center;
-    margin-bottom: 1.5rem;
-    color: #333;
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
 }
 
-.register-form label {
-    margin: 0.5rem 0 0.2rem;
-    display: block;
-    font-weight: 500;
-    color: #555;
+.input-group {
+  margin-bottom: 15px;
 }
 
-.register-form input {
-    width: 100%;
-    padding: 0.6rem;
-    margin-bottom: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+.input-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
 }
 
-.register-form button {
-    width: 100%;
-    padding: 0.7rem;
-    border: none;
-    background-color: #0066cc;
-    color: white;
-    font-size: 1rem;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+.input-group input,
+.input-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
 }
 
-.register-form button:hover {
-    background-color: #004c99;
+.input-group input:focus,
+.input-group textarea:focus {
+  border-color: #007bff;
+  outline: none;
 }
 
-.register-form p {
-    text-align: center;
-    margin-top: 1rem;
-    font-size: 0.9rem;
+button {
+  width: 100%;
+  padding: 12px;
+  background: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease;
 }
 
-.register-form a {
-    color: #0066cc;
-    text-decoration: none;
-}
-
-.register-form a:hover {
-    text-decoration: underline;
+button:hover {
+  background: #0056b3;
 }

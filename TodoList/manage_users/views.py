@@ -3,6 +3,8 @@ from django.shortcuts import render
 
 def index(request):
     return render(request, 'manage_users/index.html')
-
 def main(request):
-    return render(request, 'manage_users/mainhtml.html')
+    return render(request, 'manage_users/main.html')
+def temp(request):
+    return render(request, 'manage_users/temp.html')
+  
