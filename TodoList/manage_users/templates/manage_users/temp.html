@@ -1,0 +1,770 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Application de Gestion de Projet</title>
+    <link rel="stylesheet" href="{% static 'manage_users/temp.css' %}">
+</head>
+<body>
+    <!-- Toggle pour la navbar -->
+    <input type="checkbox" id="nav-toggle" class="nav-toggle">
+    
+    <!-- Navbar verticale -->
+    <nav class="navbar">
+        <div class="navbar-header">
+            <label for="nav-toggle" class="nav-toggle-btn">
+                <span class="hamburger"></span>
+            </label>
+            <h1 class="navbar-title">Project Manager</h1>
+        </div>
+        
+        <ul class="navbar-menu">
+            <li><a href="#dashboard" class="nav-item active">
+                <span class="icon">🏠</span>
+                <span class="text">Tableau de bord</span>
+            </a></li>
+            <li><a href="#members" class="nav-item">
+                <span class="icon">👥</span>
+                <span class="text">Membres / Collaborateurs</span>
+            </a></li>
+            <li><a href="#new-task" class="nav-item">
+                <span class="icon">📝</span>
+                <span class="text">Nouvelle tâche</span>
+            </a></li>
+            <li><a href="#task-management" class="nav-item">
+                <span class="icon">📁</span>
+                <span class="text">Gestion des tâches</span>
+            </a></li>
+            <li><a href="#submitted-tasks" class="nav-item">
+                <span class="icon">📤</span>
+                <span class="text">Tâches soumises</span>
+            </a></li>
+            <li><a href="#task-status" class="nav-item">
+                <span class="icon">✅</span>
+                <span class="text">Statuts des tâches</span>
+            </a></li>
+            <li><a href="#calendar" class="nav-item">
+                <span class="icon">🗓️</span>
+                <span class="text">Agenda</span>
+            </a></li>
+            <li><a href="#project-creation" class="nav-item">
+                <span class="icon">🏗️</span>
+                <span class="text">Création de projet</span>
+            </a></li>
+            <li><a href="#notifications" class="nav-item">
+                <span class="icon">🔔</span>
+                <span class="text">Notifications</span>
+            </a></li>
+        </ul>
+        
+        <div class="navbar-footer">
+            <a href="#logout" class="nav-item logout">
+                <span class="icon">🚪</span>
+                <span class="text">Déconnexion</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Contenu principal -->
+    <main class="main-content">
+        <!-- Dashboard -->
+        <section id="dashboard" class="page-section active">
+            <header class="page-header">
+                <h1>Tableau de bord</h1>
+                <div class="header-actions">
+                    <a href="#modal-new-task" class="btn btn-primary">Créer une tâche</a>
+                    <a href="#modal-new-project" class="btn btn-success">Nouveau projet</a>
+                </div>
+            </header>
+
+            <!-- Statistiques principales -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">📊</div>
+                    <div class="stat-content">
+                        <h3>24</h3>
+                        <p>Tâches totales</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🟡</div>
+                    <div class="stat-content">
+                        <h3>8</h3>
+                        <p>En cours</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-content">
+                        <h3>12</h3>
+                        <p>Terminées</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🔴</div>
+                    <div class="stat-content">
+                        <h3>4</h3>
+                        <p>En retard</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-grid">
+                <!-- Graphique camembert -->
+                <div class="widget chart-widget">
+                    <h3>Statut des tâches</h3>
+                    <div class="pie-chart">
+                        <div class="pie-slice" style="--percentage: 50; --color: #10b981; --offset: 0;"></div>
+                        <div class="pie-slice" style="--percentage: 33; --color: #f59e0b; --offset: 50;"></div>
+                        <div class="pie-slice" style="--percentage: 17; --color: #ef4444; --offset: 83;"></div>
+                        <div class="pie-center">
+                            <span class="pie-total">24</span>
+                            <span class="pie-label">Total</span>
+                        </div>
+                    </div>
+                    <div class="chart-legend">
+                        <div class="legend-item">
+                            <span class="legend-color" style="background: #10b981;"></span>
+                            <span>Terminées (12)</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color" style="background: #f59e0b;"></span>
+                            <span>En cours (8)</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color" style="background: #ef4444;"></span>
+                            <span>En retard (4)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Graphique d'évolution -->
+                <div class="widget chart-widget">
+                    <h3>Évolution des tâches</h3>
+                    <div class="bar-chart">
+                        <div class="bar" style="--height: 50%;">
+                            <span class="bar-value">12</span>
+                            <span class="bar-label">Lun</span>
+                        </div>
+                        <div class="bar" style="--height: 33%;">
+                            <span class="bar-value">8</span>
+                            <span class="bar-label">Mar</span>
+                        </div>
+                        <div class="bar" style="--height: 62%;">
+                            <span class="bar-value">15</span>
+                            <span class="bar-label">Mer</span>
+                        </div>
+                        <div class="bar" style="--height: 75%;">
+                            <span class="bar-value">18</span>
+                            <span class="bar-label">Jeu</span>
+                        </div>
+                        <div class="bar" style="--height: 91%;">
+                            <span class="bar-value">22</span>
+                            <span class="bar-label">Ven</span>
+                        </div>
+                        <div class="bar" style="--height: 79%;">
+                            <span class="bar-value">19</span>
+                            <span class="bar-label">Sam</span>
+                        </div>
+                        <div class="bar" style="--height: 100%;">
+                            <span class="bar-value">24</span>
+                            <span class="bar-label">Dim</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tâches récentes -->
+                <div class="widget task-list-widget">
+                    <h3>Tâches récentes</h3>
+                    <div class="task-list">
+                        <div class="task-item">
+                            <div class="task-status completed"></div>
+                            <div class="task-content">
+                                <h4>Refonte du design</h4>
+                                <p>Site Web • Marie Dupont</p>
+                            </div>
+                            <span class="task-badge completed">terminé</span>
+                        </div>
+                        <div class="task-item">
+                            <div class="task-status in-progress"></div>
+                            <div class="task-content">
+                                <h4>Tests unitaires</h4>
+                                <p>API Backend • Jean Martin</p>
+                            </div>
+                            <span class="task-badge in-progress">en cours</span>
+                        </div>
+                        <div class="task-item">
+                            <div class="task-status pending"></div>
+                            <div class="task-content">
+                                <h4>Documentation</h4>
+                                <p>Mobile App • Sophie Bernard</p>
+                            </div>
+                            <span class="task-badge pending">en attente</span>
+                        </div>
+                        <div class="task-item">
+                            <div class="task-status overdue"></div>
+                            <div class="task-content">
+                                <h4>Déploiement</h4>
+                                <p>Site Web • Pierre Durand</p>
+                            </div>
+                            <span class="task-badge overdue">en retard</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Notifications récentes -->
+                <div class="widget notification-widget">
+                    <h3>Notifications</h3>
+                    <div class="notification-list">
+                        <div class="notification-item new">
+                            <div class="notification-dot new"></div>
+                            <div class="notification-content">
+                                <p>Nouvelle tâche assignée</p>
+                                <span class="notification-time">5 min</span>
+                            </div>
+                        </div>
+                        <div class="notification-item comment">
+                            <div class="notification-dot comment"></div>
+                            <div class="notification-content">
+                                <p>Commentaire sur "Design"</p>
+                                <span class="notification-time">1h</span>
+                            </div>
+                        </div>
+                        <div class="notification-item completed">
+                            <div class="notification-dot completed"></div>
+                            <div class="notification-content">
+                                <p>Tâche terminée par Jean</p>
+                                <span class="notification-time">2h</span>
+                            </div>
+                        </div>
+                        <div class="notification-item deadline">
+                            <div class="notification-dot deadline"></div>
+                            <div class="notification-content">
+                                <p>Échéance dans 2 jours</p>
+                                <span class="notification-time">3h</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Autres sections -->
+        <section id="members" class="page-section">
+            <header class="page-header">
+                <h1>👥 Membres & Collaborateurs</h1>
+                <a href="#modal-add-member" class="btn btn-primary">Ajouter un membre</a>
+            </header>
+            
+            <div class="filters">
+                <select class="filter-select">
+                    <option>Tous les rôles</option>
+                    <option>Chef de projet</option>
+                    <option>Développeur</option>
+                    <option>Designer</option>
+                </select>
+                <input type="text" placeholder="Rechercher un membre..." class="search-input">
+            </div>
+
+            <div class="members-grid">
+                <div class="member-card">
+                    <div class="member-avatar">MD</div>
+                    <div class="member-info">
+                        <h3>Marie Dupont</h3>
+                        <p>Chef de projet</p>
+                        <span class="status available">Disponible</span>
+                    </div>
+                    <div class="member-actions">
+                        <a href="#modal-edit-member" class="btn-icon">✏️</a>
+                        <a href="#modal-delete-member" class="btn-icon">🗑️</a>
+                    </div>
+                </div>
+                <div class="member-card">
+                    <div class="member-avatar">JM</div>
+                    <div class="member-info">
+                        <h3>Jean Martin</h3>
+                        <p>Développeur</p>
+                        <span class="status busy">Occupé</span>
+                    </div>
+                    <div class="member-actions">
+                        <a href="#modal-edit-member" class="btn-icon">✏️</a>
+                        <a href="#modal-delete-member" class="btn-icon">🗑️</a>
+                    </div>
+                </div>
+                <div class="member-card">
+                    <div class="member-avatar">SB</div>
+                    <div class="member-info">
+                        <h3>Sophie Bernard</h3>
+                        <p>Designer</p>
+                        <span class="status available">Disponible</span>
+                    </div>
+                    <div class="member-actions">
+                        <a href="#modal-edit-member" class="btn-icon">✏️</a>
+                        <a href="#modal-delete-member" class="btn-icon">🗑️</a>
+                    </div>
+                </div>
+                <div class="member-card">
+                    <div class="member-avatar">PD</div>
+                    <div class="member-info">
+                        <h3>Pierre Durand</h3>
+                        <p>Développeur</p>
+                        <span class="status away">En congé</span>
+                    </div>
+                    <div class="member-actions">
+                        <a href="#modal-edit-member" class="btn-icon">✏️</a>
+                        <a href="#modal-delete-member" class="btn-icon">🗑️</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="new-task" class="page-section">
+            <header class="page-header">
+                <h1>📝 Nouvelle tâche</h1>
+            </header>
+            
+            <div class="template-grid">
+                <a href="#modal-new-task" class="template-card">
+                    <div class="template-icon">📝</div>
+                    <h3>Tâche personnalisée</h3>
+                    <p>Créer une tâche à partir de zéro</p>
+                </a>
+                <a href="#modal-dev-task" class="template-card">
+                    <div class="template-icon">💻</div>
+                    <h3>Tâche de développement</h3>
+                    <p>Template pour les tâches de code</p>
+                </a>
+                <a href="#modal-design-task" class="template-card">
+                    <div class="template-icon">🎨</div>
+                    <h3>Tâche de design</h3>
+                    <p>Template pour les tâches créatives</p>
+                </a>
+            </div>
+        </section>
+
+        <section id="task-management" class="page-section">
+            <header class="page-header">
+                <h1>📁 Gestion des tâches</h1>
+            </header>
+            
+            <div class="filters">
+                <select class="filter-select">
+                    <option>Tous les statuts</option>
+                    <option>En attente</option>
+                    <option>En cours</option>
+                    <option>Terminé</option>
+                </select>
+                <input type="text" placeholder="Rechercher une tâche..." class="search-input">
+            </div>
+
+            <div class="project-groups">
+                <div class="project-group">
+                    <h3>Site Web Corporate</h3>
+                    <div class="task-table">
+                        <div class="task-row">
+                            <div class="task-info">
+                                <h4>Refonte du design</h4>
+                                <p>Marie Dupont • Échéance: 15/01/2025</p>
+                            </div>
+                            <div class="task-progress">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 65%;"></div>
+                                </div>
+                                <span>65%</span>
+                            </div>
+                            <div class="task-actions">
+                                <a href="#modal-edit-task" class="btn btn-sm">Modifier</a>
+                                <a href="#modal-complete-task" class="btn btn-sm btn-success">Valider</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="submitted-tasks" class="page-section">
+            <header class="page-header">
+                <h1>📤 Tâches soumises</h1>
+            </header>
+            
+            <div class="submitted-stats">
+                <div class="stat-card">
+                    <div class="stat-icon">⏳</div>
+                    <div class="stat-content">
+                        <h3>3</h3>
+                        <p>En attente</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">💬</div>
+                    <div class="stat-content">
+                        <h3>2</h3>
+                        <p>Commentées</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-content">
+                        <h3>5</h3>
+                        <p>Validées</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="submitted-list">
+                <div class="submitted-item">
+                    <div class="submitted-header">
+                        <h4>Maquettes UI/UX</h4>
+                        <span class="badge pending">en attente</span>
+                    </div>
+                    <p>Soumis par Sophie Bernard • Application Mobile</p>
+                    <div class="submitted-actions">
+                        <a href="#modal-view-submission" class="btn btn-sm">Voir détails</a>
+                        <a href="#download" class="btn btn-sm">📥 Télécharger</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="task-status" class="page-section">
+            <header class="page-header">
+                <h1>✅ Statuts des tâches</h1>
+            </header>
+            
+            <div class="status-overview">
+                <div class="status-chart">
+                    <div class="pie-chart-large">
+                        <div class="pie-slice" style="--percentage: 50; --color: #10b981; --offset: 0;"></div>
+                        <div class="pie-slice" style="--percentage: 33; --color: #f59e0b; --offset: 50;"></div>
+                        <div class="pie-slice" style="--percentage: 17; --color: #ef4444; --offset: 83;"></div>
+                        <div class="pie-center">
+                            <span class="pie-total">24</span>
+                            <span class="pie-label">Total</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="status-grid">
+                    <div class="status-card">
+                        <div class="status-icon todo">📝</div>
+                        <h3>À faire</h3>
+                        <span class="status-count">6</span>
+                    </div>
+                    <div class="status-card">
+                        <div class="status-icon progress">⏳</div>
+                        <h3>En cours</h3>
+                        <span class="status-count">8</span>
+                    </div>
+                    <div class="status-card">
+                        <div class="status-icon completed">✅</div>
+                        <h3>Terminé</h3>
+                        <span class="status-count">12</span>
+                    </div>
+                    <div class="status-card">
+                        <div class="status-icon overdue">🔴</div>
+                        <h3>En retard</h3>
+                        <span class="status-count">4</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="calendar" class="page-section">
+            <header class="page-header">
+                <h1>🗓️ Agenda</h1>
+            </header>
+            
+            <div class="calendar-container">
+                <div class="calendar-header">
+                    <button class="calendar-nav">‹</button>
+                    <h3>Janvier 2025</h3>
+                    <button class="calendar-nav">›</button>
+                </div>
+                
+                <div class="calendar-grid">
+                    <div class="calendar-weekdays">
+                        <span>Lun</span>
+                        <span>Mar</span>
+                        <span>Mer</span>
+                        <span>Jeu</span>
+                        <span>Ven</span>
+                        <span>Sam</span>
+                        <span>Dim</span>
+                    </div>
+                    <div class="calendar-days">
+                        <div class="calendar-day other-month">30</div>
+                        <div class="calendar-day other-month">31</div>
+                        <div class="calendar-day">1</div>
+                        <div class="calendar-day">2</div>
+                        <div class="calendar-day">3</div>
+                        <div class="calendar-day">4</div>
+                        <div class="calendar-day">5</div>
+                        <div class="calendar-day">6</div>
+                        <div class="calendar-day">7</div>
+                        <div class="calendar-day">8</div>
+                        <div class="calendar-day">9</div>
+                        <div class="calendar-day">10</div>
+                        <div class="calendar-day">11</div>
+                        <div class="calendar-day">12</div>
+                        <div class="calendar-day">13</div>
+                        <div class="calendar-day today">14</div>
+                        <div class="calendar-day has-task">
+                            <span>15</span>
+                            <div class="task-dot"></div>
+                        </div>
+                        <div class="calendar-day">16</div>
+                        <div class="calendar-day">17</div>
+                        <div class="calendar-day">18</div>
+                        <div class="calendar-day">19</div>
+                        <div class="calendar-day has-task">
+                            <span>20</span>
+                            <div class="task-dot"></div>
+                        </div>
+                        <div class="calendar-day">21</div>
+                        <div class="calendar-day">22</div>
+                        <div class="calendar-day">23</div>
+                        <div class="calendar-day">24</div>
+                        <div class="calendar-day">25</div>
+                        <div class="calendar-day">26</div>
+                        <div class="calendar-day">27</div>
+                        <div class="calendar-day">28</div>
+                        <div class="calendar-day">29</div>
+                        <div class="calendar-day">30</div>
+                        <div class="calendar-day">31</div>
+                        <div class="calendar-day other-month">1</div>
+                        <div class="calendar-day other-month">2</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="project-creation" class="page-section">
+            <header class="page-header">
+                <h1>🏗️ Création de projet</h1>
+            </header>
+            
+            <div class="project-templates">
+                <div class="template-card">
+                    <div class="template-icon">🌐</div>
+                    <h3>Projet Web</h3>
+                    <p>Site web ou application web</p>
+                    <a href="#modal-new-web-project" class="btn btn-primary">Utiliser</a>
+                </div>
+                <div class="template-card">
+                    <div class="template-icon">📱</div>
+                    <h3>Application Mobile</h3>
+                    <p>App iOS/Android</p>
+                    <a href="#modal-new-mobile-project" class="btn btn-primary">Utiliser</a>
+                </div>
+                <div class="template-card">
+                    <div class="template-icon">⚙️</div>
+                    <h3>Projet API</h3>
+                    <p>Backend et services</p>
+                    <a href="#modal-new-api-project" class="btn btn-primary">Utiliser</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="notifications" class="page-section">
+            <header class="page-header">
+                <h1>🔔 Notifications</h1>
+                <div class="notification-filters">
+                    <button class="filter-btn active">Toutes</button>
+                    <button class="filter-btn">Non lues</button>
+                    <button class="filter-btn">Tâches</button>
+                    <button class="filter-btn">Commentaires</button>
+                </div>
+            </header>
+            
+            <div class="notification-list-full">
+                <div class="notification-item-full unread">
+                    <div class="notification-avatar">MD</div>
+                    <div class="notification-content-full">
+                        <h4>Nouvelle tâche assignée</h4>
+                        <p>Marie Dupont vous a assigné la tâche "Interface utilisateur" dans le projet Application Mobile</p>
+                        <span class="notification-time">Il y a 5 minutes</span>
+                    </div>
+                    <div class="notification-actions">
+                        <button class="btn-icon">✓</button>
+                        <button class="btn-icon">🗑️</button>
+                    </div>
+                </div>
+                
+                <div class="notification-item-full">
+                    <div class="notification-avatar">JM</div>
+                    <div class="notification-content-full">
+                        <h4>Commentaire ajouté</h4>
+                        <p>Jean Martin a commenté votre tâche "Tests unitaires": "Les tests sont prêts pour la review"</p>
+                        <span class="notification-time">Il y a 1 heure</span>
+                    </div>
+                    <div class="notification-actions">
+                        <button class="btn-icon">💬</button>
+                        <button class="btn-icon">🗑️</button>
+                    </div>
+                </div>
+                
+                <div class="notification-item-full">
+                    <div class="notification-avatar">SB</div>
+                    <div class="notification-content-full">
+                        <h4>Tâche terminée</h4>
+                        <p>Sophie Bernard a marqué comme terminée la tâche "Maquettes UI/UX"</p>
+                        <span class="notification-time">Il y a 2 heures</span>
+                    </div>
+                    <div class="notification-actions">
+                        <button class="btn-icon">👁️</button>
+                        <button class="btn-icon">🗑️</button>
+                    </div>
+                </div>
+                
+                <div class="notification-item-full">
+                    <div class="notification-avatar">⏰</div>
+                    <div class="notification-content-full">
+                        <h4>Échéance approche</h4>
+                        <p>La tâche "Documentation technique" arrive à échéance dans 2 jours</p>
+                        <span class="notification-time">Il y a 3 heures</span>
+                    </div>
+                    <div class="notification-actions">
+                        <button class="btn-icon">📅</button>
+                        <button class="btn-icon">🗑️</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modales -->
+    <div id="modal-new-task" class="modal">
+        <div class="modal-content">
+            <a href="#" class="modal-close">×</a>
+            <h2>Créer une nouvelle tâche</h2>
+            <form class="modal-form">
+                <div class="form-group">
+                    <label>Nom de la tâche</label>
+                    <input type="text" placeholder="Ex: Développer la page d'accueil">
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea rows="4" placeholder="Décrivez les détails de la tâche..."></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Projet associé</label>
+                        <select>
+                            <option>Sélectionner un projet</option>
+                            <option>Site Web Corporate</option>
+                            <option>Application Mobile</option>
+                            <option>API Backend</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Membre assigné</label>
+                        <select>
+                            <option>Sélectionner un membre</option>
+                            <option>Marie Dupont</option>
+                            <option>Jean Martin</option>
+                            <option>Sophie Bernard</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Date limite</label>
+                        <input type="date">
+                    </div>
+                    <div class="form-group">
+                        <label>Priorité</label>
+                        <select>
+                            <option>Basse</option>
+                            <option>Moyenne</option>
+                            <option>Haute</option>
+                            <option>Critique</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <a href="#" class="btn btn-secondary">Annuler</a>
+                    <button type="submit" class="btn btn-primary">Créer la tâche</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="modal-new-project" class="modal">
+        <div class="modal-content">
+            <a href="#" class="modal-close">×</a>
+            <h2>Créer un nouveau projet</h2>
+            <form class="modal-form">
+                <div class="form-group">
+                    <label>Nom du projet</label>
+                    <input type="text" placeholder="Ex: Site Web Corporate">
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea rows="4" placeholder="Décrivez le projet..."></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Date de début</label>
+                        <input type="date">
+                    </div>
+                    <div class="form-group">
+                        <label>Date de fin</label>
+                        <input type="date">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Membres associés</label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox"> Marie Dupont</label>
+                        <label><input type="checkbox"> Jean Martin</label>
+                        <label><input type="checkbox"> Sophie Bernard</label>
+                        <label><input type="checkbox"> Pierre Durand</label>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <a href="#" class="btn btn-secondary">Annuler</a>
+                    <button type="submit" class="btn btn-success">Créer le projet</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="modal-add-member" class="modal">
+        <div class="modal-content">
+            <a href="#" class="modal-close">×</a>
+            <h2>Ajouter un membre</h2>
+            <form class="modal-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Nom complet</label>
+                        <input type="text">
+                    </div>
+                    <div class="form-group">
+                        <label>Rôle</label>
+                        <select>
+                            <option>Chef de projet</option>
+                            <option>Développeur</option>
+                            <option>Designer</option>
+                            <option>Testeur</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email">
+                </div>
+                <div class="form-group">
+                    <label>Téléphone</label>
+                    <input type="tel">
+                </div>
+                <div class="form-actions">
+                    <a href="#" class="btn btn-secondary">Annuler</a>
+                    <button type="submit" class="btn btn-primary">Ajouter</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
