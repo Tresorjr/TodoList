@@ -1,0 +1,74 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Personal Dashboard</title>
+  <link rel="stylesheet" href="{% static 'manage_users/text.css' %}">
+  </head>
+<body>
+
+  <header>
+    <h1>My Personal Dashboard</h1>
+  </header>
+
+  <div class="container">
+    <!-- Left Column -->
+    <div>
+      <button class="submit-button">Submit Work</button>
+
+      <div class="card">
+        <h2>Assigned Tasks</h2>
+        <ul>
+          <li>Finish project report</li>
+          <li>Update client feedback</li>
+          <li>Review team submissions</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>Personal Statistics</h2>
+        <div class="stats">
+          <div class="stat-box">
+            <h3>8</h3>
+            <p>Completed</p>
+          </div>
+          <div class="stat-box">
+            <h3>3</h3>
+            <p>In Progress</p>
+          </div>
+          <div class="stat-box">
+            <h3>1</h3>
+            <p>Overdue</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Calendar View</h2>
+        <div class="calendar">
+          <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
+          <div>1</div><div>2</div><div>3</div><div>4</div><div>5</div><div>6</div><div>7</div>
+          <div>8</div><div>9</div><div>10</div><div>11</div><div>12</div><div>13</div><div>14</div>
+          <div>15</div><div>16</div><div>17</div><div>18</div><div>19</div><div>20</div><div>21</div>
+          <div>22</div><div>23</div><div>24</div><div>25</div><div>26</div><div>27</div><div>28</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column -->
+    <div>
+      <div class="card">
+        <h2>Latest Notifications</h2>
+        <ul class="notifications">
+          <li>Comment added on submitted work.</li>
+          <li>New task: Update wireframes.</li>
+          <li>Work approved: Monthly report.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,102 @@
+ * {
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background-color: #f4f6f9;
+    }
+
+    header {
+      background-color: #4a90e2;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .card {
+      background-color: white;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    }
+
+    .submit-button {
+      background-color: #4a90e2;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+
+    .stats {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .stat-box {
+      flex: 1;
+      margin: 0 10px;
+      background-color: #eaf1fb;
+      text-align: center;
+      padding: 15px;
+      border-radius: 8px;
+    }
+
+    ul {
+      list-style-type: none;
+      padding-left: 0;
+    }
+
+    li {
+      background-color: #f9f9f9;
+      padding: 10px;
+      margin: 5px 0;
+      border-left: 5px solid #4a90e2;
+      border-radius: 4px;
+    }
+
+    .calendar {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 5px;
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .calendar div {
+      background-color: #fff;
+      padding: 10px;
+      border-radius: 4px;
+      border: 1px solid #ddd;
+    }
+
+    .notifications li {
+      border-left-color: #f39c12;
+    }
+
+    @media(max-width: 768px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+
+      .stats {
+        flex-direction: column;
+      }
+
+      .stat-box {
+        margin: 10px 0;
+      }
+    }
