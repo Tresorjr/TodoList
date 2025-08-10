@@ -8,43 +8,56 @@
     <link rel="stylesheet" href="{% static 'manage_users/style.css' %}">
 </head>
 <body>
-    <div class="container">
-        <div class="login-container">
-            <div class="logo">
-                <i class="fas fa-tasks"></i>
-                <h1>TaskMaster</h1>
-                <p>Organize your life, one task at a time</p>
-            </div>
-            
-            <form class="login-form">
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" placeholder="Enter your email" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" placeholder="Enter your password" required>
-                    <a href="#" class="forgot-password">Forgot password?</a>
-                </div>
-                
-                <button type="submit" class="login-btn">Login</button>
-                
-                <div class="divider">
-                    <span>or</span>
-                </div>
-                
-                <button type="button" class="social-login google">
-                    <i class="fab fa-google"></i> Continue with Google
-                </button>
-                
-                <button type="button" class="social-login github">
-                    <i class="fab fa-github"></i> Continue with GitHub
-                </button>
-                
-                <p class="signup-link">Don't have an account? <a href="#">Sign up</a></p>
-            </form>
+  <div class="wrap">
+    <main class="card" role="main" aria-labelledby="title">
+      <div class="brand">
+        <h1 id="title">Connexion</h1>
+        <p>Entrez vos informations pour vous connecter</p>
+      </div>
+
+      <form action="#" method="post" novalidate>
+        <div class="two" aria-hidden="false">
+          <div class="field">
+            <label for="nom">Nom</label>
+            <input id="nom" name="nom" type="text" placeholder="Votre nom" autocomplete="family-name" required>
+          </div>
+
+          <div class="field">
+            <label for="prenom">Prénom</label>
+            <input id="prenom" name="prenom" type="text" placeholder="Votre prénom" autocomplete="given-name" required>
+          </div>
         </div>
-    </div>
+
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" placeholder="exemple@domaine.com" autocomplete="email" required>
+        </div>
+
+        <div class="field">
+          <label for="password">Mot de passe</label>
+          <input id="password" name="password" type="password" placeholder="••••••••" autocomplete="current-password" required>
+        </div>
+
+        <div class="field">
+          <label for="poste">Poste</label>
+          <select id="poste" name="poste" required>
+            <option value="" disabled selected>Choisir un poste</option>
+            <option>Développeur</option>
+            <option>Designer</option>
+            <option>Chef de projet</option>
+            <option>Administrateur</option>
+            <option>Autre</option>
+          </select>
+        </div>
+
+        <div class="actions">
+          <button class="btn" type="submit">Se connecter</button>
+          <a class="secondary" href="#">Mot de passe oublié ?</a>
+        </div>
+
+        <p class="small">En cliquant sur « Se connecter », vous acceptez les conditions d'utilisation.</p>
+      </form>
+    </main>
+  </div>
 </body>
 </html>

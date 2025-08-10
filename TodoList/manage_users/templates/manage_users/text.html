@@ -1,0 +1,519 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tableau de bord personnel</title>
+    <link rel="stylesheet" href="{% static 'manage_users/text.css' %}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="user-profile">
+                <div class="avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="user-info">
+                    <h3>John Doe</h3>
+                    <p>Développeur</p>
+                </div>
+            </div>
+            
+            <nav class="nav-menu">
+                <a href="#" class="nav-item active" data-tab="dashboard">
+                    <i class="fas fa-home"></i>
+                    <span>Tableau de bord</span>
+                </a>
+                <a href="#" class="nav-item" data-tab="tasks">
+                    <i class="fas fa-tasks"></i>
+                    <span>Mes tâches</span>
+                </a>
+                <a href="#" class="nav-item" data-tab="stats">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>Statistiques</span>
+                </a>
+                <a href="#" class="nav-item" data-tab="calendar">
+                    <i class="fas fa-calendar"></i>
+                    <span>Calendrier</span>
+                </a>
+                <a href="#" class="nav-item" data-tab="projects">
+                    <i class="fas fa-folder-open"></i>
+                    <span>Projets</span>
+                </a>
+                <a href="#" class="nav-item" data-tab="notifications">
+                    <i class="fas fa-bell"></i>
+                    <span>Notifications</span>
+                    <span class="notification-badge">3</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Dashboard Tab -->
+            <div id="dashboard" class="tab-content active">
+                <div class="header">
+                    <div class="header-info">
+                        <h1>Tableau de bord</h1>
+                        <p>Bienvenue dans votre espace de travail personnel</p>
+                    </div>
+                    <button class="submit-work-btn" onclick="openSubmitModal()">
+                        <i class="fas fa-plus"></i>
+                        Soumettre un travail
+                    </button>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="stats-grid">
+                    <div class="stat-card todo">
+                        <div class="stat-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>À faire</h3>
+                            <span class="stat-number">5</span>
+                        </div>
+                    </div>
+                    <div class="stat-card in-progress">
+                        <div class="stat-icon">
+                            <i class="fas fa-spinner"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>En cours</h3>
+                            <span class="stat-number">3</span>
+                        </div>
+                    </div>
+                    <div class="stat-card completed">
+                        <div class="stat-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Terminées</h3>
+                            <span class="stat-number">12</span>
+                        </div>
+                    </div>
+                    <div class="stat-card overdue">
+                        <div class="stat-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>En retard</h3>
+                            <span class="stat-number">2</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Tasks -->
+                <div class="section">
+                    <h2>Tâches récentes</h2>
+                    <div class="tasks-list">
+                        <div class="task-card high-priority">
+                            <div class="task-header">
+                                <h3>Développer l'interface utilisateur</h3>
+                                <span class="task-status in-progress">En cours</span>
+                            </div>
+                            <p class="task-description">Créer les composants React pour le tableau de bord</p>
+                            <div class="task-meta">
+                                <span class="task-date">
+                                    <i class="fas fa-calendar"></i>
+                                    Échéance: 20 Jan 2025
+                                </span>
+                                <span class="task-comments">
+                                    <i class="fas fa-comments"></i>
+                                    2 commentaires
+                                </span>
+                            </div>
+                            <div class="task-actions">
+                                <select class="status-select">
+                                    <option value="todo">À faire</option>
+                                    <option value="in-progress" selected>En cours</option>
+                                    <option value="completed">Terminée</option>
+                                    <option value="blocked">Bloquée</option>
+                                </select>
+                                <button class="comment-btn" onclick="toggleComments(this)">
+                                    Voir commentaires
+                                </button>
+                            </div>
+                            <div class="comments-section" style="display: none;">
+                                <div class="comment">
+                                    <strong>Manager:</strong> Bon travail sur le design initial
+                                    <span class="comment-date">12 Jan 2025</span>
+                                </div>
+                                <div class="add-comment">
+                                    <input type="text" placeholder="Ajouter un commentaire...">
+                                    <button>Ajouter</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="task-card medium-priority">
+                            <div class="task-header">
+                                <h3>Tests unitaires API</h3>
+                                <span class="task-status todo">À faire</span>
+                            </div>
+                            <p class="task-description">Écrire les tests pour les endpoints REST</p>
+                            <div class="task-meta">
+                                <span class="task-date">
+                                    <i class="fas fa-calendar"></i>
+                                    Échéance: 18 Jan 2025
+                                </span>
+                                <span class="task-comments">
+                                    <i class="fas fa-comments"></i>
+                                    0 commentaires
+                                </span>
+                            </div>
+                            <div class="task-actions">
+                                <select class="status-select">
+                                    <option value="todo" selected>À faire</option>
+                                    <option value="in-progress">En cours</option>
+                                    <option value="completed">Terminée</option>
+                                    <option value="blocked">Bloquée</option>
+                                </select>
+                                <button class="comment-btn" onclick="toggleComments(this)">
+                                    Voir commentaires
+                                </button>
+                            </div>
+                            <div class="comments-section" style="display: none;">
+                                <div class="add-comment">
+                                    <input type="text" placeholder="Ajouter un commentaire...">
+                                    <button>Ajouter</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Notifications -->
+                <div class="section">
+                    <h2>Notifications récentes</h2>
+                    <div class="notifications-preview">
+                        <div class="notification-item unread">
+                            <div class="notification-icon task-assigned">
+                                <i class="fas fa-user-plus"></i>
+                            </div>
+                            <div class="notification-content">
+                                <h4>Nouvelle tâche assignée</h4>
+                                <p>Tests unitaires API vous a été assignée</p>
+                                <span class="notification-time">Il y a 2 heures</span>
+                            </div>
+                        </div>
+                        <div class="notification-item unread">
+                            <div class="notification-icon comment-added">
+                                <i class="fas fa-comment"></i>
+                            </div>
+                            <div class="notification-content">
+                                <h4>Nouveau commentaire</h4>
+                                <p>Un commentaire a été ajouté à votre tâche</p>
+                                <span class="notification-time">Il y a 4 heures</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tasks Tab -->
+            <div id="tasks" class="tab-content">
+                <div class="header">
+                    <h1>Mes tâches</h1>
+                    <p>Gérez toutes vos tâches assignées</p>
+                </div>
+                
+                <div class="tasks-filter">
+                    <button class="filter-btn active" data-filter="all">Toutes</button>
+                    <button class="filter-btn" data-filter="todo">À faire</button>
+                    <button class="filter-btn" data-filter="in-progress">En cours</button>
+                    <button class="filter-btn" data-filter="completed">Terminées</button>
+                    <button class="filter-btn" data-filter="overdue">En retard</button>
+                </div>
+
+                <div class="tasks-list">
+                    <!-- Tasks will be populated here -->
+                </div>
+            </div>
+
+            <!-- Stats Tab -->
+            <div id="stats" class="tab-content">
+                <div class="header">
+                    <h1>Statistiques</h1>
+                    <p>Analysez vos performances</p>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card todo">
+                        <div class="stat-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>À faire</h3>
+                            <span class="stat-number">5</span>
+                            <span class="stat-percentage">25%</span>
+                        </div>
+                    </div>
+                    <div class="stat-card in-progress">
+                        <div class="stat-icon">
+                            <i class="fas fa-spinner"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>En cours</h3>
+                            <span class="stat-number">3</span>
+                            <span class="stat-percentage">15%</span>
+                        </div>
+                    </div>
+                    <div class="stat-card completed">
+                        <div class="stat-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Terminées</h3>
+                            <span class="stat-number">12</span>
+                            <span class="stat-percentage">60%</span>
+                        </div>
+                    </div>
+                    <div class="stat-card overdue">
+                        <div class="stat-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>En retard</h3>
+                            <span class="stat-number">2</span>
+                            <span class="stat-percentage">10%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="progress-chart">
+                    <h2>Répartition des tâches</h2>
+                    <div class="chart-container">
+                        <div class="progress-bar">
+                            <div class="progress-segment completed" style="width: 60%"></div>
+                            <div class="progress-segment in-progress" style="width: 15%"></div>
+                            <div class="progress-segment todo" style="width: 15%"></div>
+                            <div class="progress-segment overdue" style="width: 10%"></div>
+                        </div>
+                        <div class="chart-legend">
+                            <div class="legend-item">
+                                <span class="legend-color completed"></span>
+                                <span>Terminées (60%)</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color in-progress"></span>
+                                <span>En cours (15%)</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color todo"></span>
+                                <span>À faire (15%)</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color overdue"></span>
+                                <span>En retard (10%)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Calendar Tab -->
+            <div id="calendar" class="tab-content">
+                <div class="header">
+                    <h1>Calendrier des échéances</h1>
+                    <p>Visualisez vos prochaines échéances</p>
+                </div>
+
+                <div class="calendar-container">
+                    <div class="calendar-event">
+                        <div class="event-date">
+                            <div class="date-number">18</div>
+                            <div class="date-month">Jan</div>
+                        </div>
+                        <div class="event-details">
+                            <h3>Tests unitaires API</h3>
+                            <p>Écrire les tests pour les endpoints REST</p>
+                            <span class="event-priority medium">Priorité moyenne</span>
+                        </div>
+                    </div>
+
+                    <div class="calendar-event overdue">
+                        <div class="event-date">
+                            <div class="date-number">15</div>
+                            <div class="date-month">Jan</div>
+                        </div>
+                        <div class="event-details">
+                            <h3>Documentation technique</h3>
+                            <p>Rédiger la documentation du projet</p>
+                            <span class="event-priority low">Priorité faible</span>
+                            <span class="overdue-badge">En retard</span>
+                        </div>
+                    </div>
+
+                    <div class="calendar-event">
+                        <div class="event-date">
+                            <div class="date-number">20</div>
+                            <div class="date-month">Jan</div>
+                        </div>
+                        <div class="event-details">
+                            <h3>Développer l'interface utilisateur</h3>
+                            <p>Créer les composants React pour le tableau de bord</p>
+                            <span class="event-priority high">Priorité haute</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Projects Tab -->
+            <div id="projects" class="tab-content">
+                <div class="header">
+                    <h1>Mes projets</h1>
+                    <p>Projets dans lesquels vous êtes impliqué</p>
+                </div>
+
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <div class="project-header">
+                            <h3>Application E-commerce</h3>
+                            <span class="project-status active">Actif</span>
+                        </div>
+                        <p class="project-description">Développement d'une plateforme de vente en ligne</p>
+                        <div class="project-progress">
+                            <div class="progress-info">
+                                <span>Progression</span>
+                                <span>65%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 65%"></div>
+                            </div>
+                        </div>
+                        <div class="project-stats">
+                            <div class="stat">
+                                <span class="stat-number">8</span>
+                                <span class="stat-label">Tâches</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-number">5</span>
+                                <span class="stat-label">Terminées</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-header">
+                            <h3>Système de gestion</h3>
+                            <span class="project-status active">Actif</span>
+                        </div>
+                        <p class="project-description">CRM interne pour l'entreprise</p>
+                        <div class="project-progress">
+                            <div class="progress-info">
+                                <span>Progression</span>
+                                <span>40%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 40%"></div>
+                            </div>
+                        </div>
+                        <div class="project-stats">
+                            <div class="stat">
+                                <span class="stat-number">6</span>
+                                <span class="stat-label">Tâches</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-number">2</span>
+                                <span class="stat-label">Terminées</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Notifications Tab -->
+            <div id="notifications" class="tab-content">
+                <div class="header">
+                    <h1>Notifications</h1>
+                    <p>Toutes vos notifications</p>
+                </div>
+
+                <div class="notifications-list">
+                    <div class="notification-item unread">
+                        <div class="notification-icon task-assigned">
+                            <i class="fas fa-user-plus"></i>
+                        </div>
+                        <div class="notification-content">
+                            <h4>Nouvelle tâche assignée</h4>
+                            <p>Tests unitaires API vous a été assignée</p>
+                            <span class="notification-time">Il y a 2 heures</span>
+                        </div>
+                        <div class="notification-actions">
+                            <button class="mark-read-btn">Marquer comme lu</button>
+                        </div>
+                    </div>
+
+                    <div class="notification-item unread">
+                        <div class="notification-icon comment-added">
+                            <i class="fas fa-comment"></i>
+                        </div>
+                        <div class="notification-content">
+                            <h4>Nouveau commentaire</h4>
+                            <p>Un commentaire a été ajouté à votre tâche "Développer l'interface utilisateur"</p>
+                            <span class="notification-time">Il y a 4 heures</span>
+                        </div>
+                        <div class="notification-actions">
+                            <button class="mark-read-btn">Marquer comme lu</button>
+                        </div>
+                    </div>
+
+                    <div class="notification-item read">
+                        <div class="notification-icon work-validated">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="notification-content">
+                            <h4>Travail validé</h4>
+                            <p>Votre travail sur "Documentation technique" a été validé</p>
+                            <span class="notification-time">Hier</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Submit Work Modal -->
+    <div id="submitModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Soumettre un travail</h2>
+                <button class="close-btn" onclick="closeSubmitModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form class="submit-form">
+                <div class="form-group">
+                    <label for="workTitle">Titre du travail</label>
+                    <input type="text" id="workTitle" placeholder="Ex: Développement du module utilisateur" required>
+                </div>
+                <div class="form-group">
+                    <label for="workDescription">Description</label>
+                    <textarea id="workDescription" rows="4" placeholder="Décrivez le travail réalisé..." required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="workFiles">Fichiers (optionnel)</label>
+                    <div class="file-upload">
+                        <input type="file" id="workFiles" multiple>
+                        <div class="file-upload-text">
+                            <i class="fas fa-upload"></i>
+                            <span>Cliquez pour sélectionner des fichiers</span>
+                            <small>PDF, DOC, images acceptés</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="cancel-btn" onclick="closeSubmitModal()">Annuler</button>
+                    <button type="submit" class="submit-btn">Soumettre</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
