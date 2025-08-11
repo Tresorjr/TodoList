@@ -7,24 +7,37 @@
   <link rel="stylesheet" href="{% static 'manage_users/main.css' %}">
 </head>
 <body>
+  
+  
+  
   <div class="form-container">
     <h2>Register</h2>
-    <form action="#" method="POST">
+    <form action="{% url 'index' %}" method="post">
+      {% csrf_token %}
       <div class="input-group">
         <label for="first-name">First Name</label>
         <input type="text" id="first-name" name="first_name" required>
       </div>
 
+      
       <div class="input-group">
         <label for="last-name">Last Name</label>
         <input type="text" id="last-name" name="last_name" required>
       </div>
 
+      {% if error %}
+      <p class="imput-group"><span style="color: red;">{{error}}</span></p>
+      {% endif %}
+      
+       <!--  {% if error %} 
+      <p class="imput-group"><span style="color: red;">email non valide !</span></p>
+      {% endif %}-->
       <div class="input-group">
         <label for="email">Email</label>
         <input type="email" id="email" name="email" required>
       </div>
 
+  
       <div class="input-group">
         <label for="password">Password</label>
         <input type="password" id="password" name="password" required>

@@ -15,7 +15,8 @@
         <p>Entrez vos informations pour vous connecter</p>
       </div>
 
-      <form action="#" method="post" novalidate>
+      <form action="" method="POST" novalidate>
+        {% csrf_token %}
         <div class="two" aria-hidden="false">
           <div class="field">
             <label for="nom">Nom</label>
@@ -27,6 +28,9 @@
             <input id="prenom" name="prenom" type="text" placeholder="Votre prénom" autocomplete="given-name" required>
           </div>
         </div>
+        {% if error %}
+      <p class="fields"><span style="color: red;">{{error}}</span></p>
+      {% endif %}
 
         <div class="field">
           <label for="email">Email</label>
