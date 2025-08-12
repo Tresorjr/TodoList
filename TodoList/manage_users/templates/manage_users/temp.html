@@ -639,43 +639,47 @@
         <div class="modal-content">
             <a href="#" class="modal-close">×</a>
             <h2>Créer une nouvelle tâche</h2>
-            <form class="modal-form">
+            <form class="modal-form" method="post">
+                {% csrf_token %}
                 <div class="form-group">
                     <label>Nom de la tâche</label>
-                    <input type="text" placeholder="Ex: Développer la page d'accueil">
+                    <input type="text"  placeholder="Ex: Développer la page d'accueil" name="title">
+
                 </div>
                 <div class="form-group">
                     <label>Description</label>
-                    <textarea rows="4" placeholder="Décrivez les détails de la tâche..."></textarea>
+                    <textarea rows="4" placeholder="Décrivez les détails de la tâche..." name="description"></textarea>
                 </div>
                 <div class="form-row">
                     <div class="form-group">
                         <label>Projet associé</label>
-                        <select>
+                        <select id = "project" name="project_as">
+                            
                             <option>Sélectionner un projet</option>
-                            <option>Site Web Corporate</option>
-                            <option>Application Mobile</option>
-                            <option>API Backend</option>
+                            {%for project in projects %}
+                            <option value="{{ project.id }}">{{ project.name_project }}</option>
+                            {% endfor %}
+                            
                         </select>
                     </div>
                     <div class="form-group">
                         <label>Membre assigné</label>
-                        <select>
+                        <select id="assigned_to" name="assigned_to">
                             <option>Sélectionner un membre</option>
-                            <option>Marie Dupont</option>
-                            <option>Jean Martin</option>
-                            <option>Sophie Bernard</option>
+                            {% for member in members %}
+                            <option value="">{{ member.member_name }}</option>
+                            {% endfor %}
                         </select>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group">
                         <label>Date limite</label>
-                        <input type="date">
+                        <input type="date" name="date">
                     </div>
                     <div class="form-group">
                         <label>Priorité</label>
-                        <select>
+                        <select id = "priority" name="priority">
                             <option>Basse</option>
                             <option>Moyenne</option>
                             <option>Haute</option>
@@ -695,14 +699,15 @@
         <div class="modal-content">
             <a href="#" class="modal-close">×</a>
             <h2>Créer un nouveau projet</h2>
-            <form class="modal-form">
+            <form class="modal-form" method="post" >
+                {% csrf_token %}
                 <div class="form-group">
                     <label>Nom du projet</label>
-                    <input type="text" placeholder="Ex: Site Web Corporate">
+                    <input type="text" placeholder="Ex: Site Web Corporate" name="name_project">
                 </div>
                 <div class="form-group">
                     <label>Description</label>
-                    <textarea rows="4" placeholder="Décrivez le projet..."></textarea>
+                    <textarea rows="4" placeholder="Décrivez le projet..." id="description_project" name="description_project"></textarea>
                 </div>
                 <div class="form-row">
                     <div class="form-group">
@@ -717,10 +722,10 @@
                 <div class="form-group">
                     <label>Membres associés</label>
                     <div class="checkbox-group">
-                        <label><input type="checkbox"> Marie Dupont</label>
-                        <label><input type="checkbox"> Jean Martin</label>
-                        <label><input type="checkbox"> Sophie Bernard</label>
-                        <label><input type="checkbox"> Pierre Durand</label>
+                        {% for member in members %}
+                        <label><input type="checkbox" name = member_project value="{{ member.id }}"> {{ member.full_name }}</label>
+                        {% endfor %}
+                        <label><input type="checkbox">rosilia</label>
                     </div>
                 </div>
                 <div class="form-actions">
@@ -735,15 +740,16 @@
         <div class="modal-content">
             <a href="#" class="modal-close">×</a>
             <h2>Ajouter un membre</h2>
-            <form class="modal-form">
+            <form class="modal-form" method="post">
+                {% csrf_token %}
                 <div class="form-row">
                     <div class="form-group">
                         <label>Nom complet</label>
-                        <input type="text">
+                        <input type="text" id="member_name" name="member_name">
                     </div>
                     <div class="form-group">
                         <label>Rôle</label>
-                        <select>
+                        <select id="role" name="role">
                             <option>Chef de projet</option>
                             <option>Développeur</option>
                             <option>Designer</option>
@@ -753,11 +759,11 @@
                 </div>
                 <div class="form-group">
                     <label>Email</label>
-                    <input type="email">
+                    <input type="email" id="email" name="email">
                 </div>
                 <div class="form-group">
                     <label>Téléphone</label>
-                    <input type="tel">
+                    <input type="tel" id="tel" name="tel">
                 </div>
                 <div class="form-actions">
                     <a href="#" class="btn btn-secondary">Annuler</a>

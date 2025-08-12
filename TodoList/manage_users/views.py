@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.core.validators import validate_email
-from .models import utilisateur
+from .models import utilisateur,projet,membre,Todo
 
 def index(request):
     if request.method == "POST":
@@ -58,8 +58,62 @@ def main(request):
 
     return render(request, 'manage_users/main.html')
 
+
+
 def temp(request):
+    projects = projet.objects.all()
+    members = membre.objects.all()
+
+    if request.method == 'POST' :
+        print("HEY HOW")
+        title = request.POST.get('title', None)
+        description = request.POST.get('description', None)
+        project_id = request.POST.get('project_as', None)
+        assigned_to_id = request.POST.get('assigned_to', None)
+        date = request.POST.get('date', None)
+
+        print( "NEW POST:", title,description,project_id,assigned_to_id,date, ) #POUR TESTER SI LA REQUETE POST MARCHE#
+        project = projet.objects.filter(id=project_id).first() if project_id else None
+        member =membre.objects.filter(id=assigned_to_id).first() if assigned_to_id else None
+        
+        tache = Todo(title=title, description=description, project_as=project,assigned_to=member, date=date)
+        tache.save()
+        tache= Todo()
+
+        print("enregistrement reussie") #VERIFIER SI LES UTILISATEUR SON BIEN ENREGISTRER#
+
+        return redirect('temp')
+        
     return render(request, 'manage_users/temp.html')
+
+def projet_create(request):
+    projects = projet.objects.all()
+    members = membre.objects.all()
+
+    if request.method == 'POST' :
+        print("HEY HOW wow")
+        name_project = request.POST.get('name_project')
+        description_project = request.POST.get('description_project')
+        start_date = request.POST.get('start_date')
+        end_date = request.POST.get('end_date')
+        member_ids = request.POST.get('member_project')
+
+        print( "NEW POST:",name_project,description_project,start_date,end_date,member_ids, ) #POUR TESTER SI LA REQUETE POST MARCHE#
+
+        project = projects.objects.create(name_project=name_project, description_project=description_project, start_date=start_date,end_date=end_date)
+
+        if member_ids :
+            project.member_project.set(member_ids)
+
+            project.save()
+            print("enregistrement reussie") #VERIFIER SI LES UTILISATEUR SON BIEN ENREGISTRER#
+            return redirect('temp')
+
+        
+    return render(request, 'manage_users/temp.html')
+
+
+
 def text(request):
     return render(request, 'manage_users/text.html')
   
