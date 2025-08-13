@@ -1,116 +1,153 @@
 from django.shortcuts import render,redirect
 from django.core.validators import validate_email
 from .models import utilisateur,projet,membre,Todo
+from django.contrib import messages
+
+def main(request):
+    if request.method == "POST":
+        first_name = request.POST.get('first_name')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        password2 = request.POST.get('password2')
+        poste = request.POST.get('poste')
+        role = request.POST.get('role')
+
+        # Vérification mot de passe
+        if password != password2:
+            return render(request, "manage_users/main.html", {"error": "Les mots de passe ne correspondent pas"})
+
+        # Vérification email existant
+        if utilisateur.objects.filter(email=email).exists():
+            return render(request, "manage_users/main.html", {"error": "Cet email est déjà utilisé"})
+
+        # Création utilisateur
+        user = utilisateur(
+            first_name=first_name,
+            email=email,
+            poste=poste,
+            role=role
+        )
+        user.set_password(password)
+        user.save()
+
+        print ("success")
+
+        messages.success(request, "Compte créé avec succès. Veuillez vous connecter.")
+        return redirect("index")
+
+    return render(request, "manage_users/main.html")
+
+
+
 
 def index(request):
     if request.method == "POST":
-        email = request.POST.get('email', None)
-        password = request.POST.get('password', None)
+        email = request.POST.get('email')
+        password = request.POST.get('password')
 
         try:
-            Utilisateur = utilisateur.objects.get(email=email)
-            if utilisateur.password==password:
-                request.session['Utilisateur_id'] = Utilisateur.id
-                print("reussie 1111")
-                return redirect('index')
-                
+            user = utilisateur.objects.get(email=email)
+        except utilisateur.DoesNotExist:
+            return render(request, "index.html", {"error": "Utilisateur introuvable"})
+
+        if user.check_password(password):
+            request.session['user_id'] = user.id
+            request.session['role'] = user.role
+
+            if user.role == 'admin':
+                return redirect('temp')  # Rediriger vers la page admin
             else:
-                return render(request,'manage_users/index.html',{"error":"mot de passe incorrect"})
-        except utilisateur.DoesNotExist :
-            return render  (request,'manage_users/index.html',{"error":"Email non trouver !"})  
+                return redirect('text')  # Rediriger vers la page membre simple
+        else:
+            return render(request, "manage_users/index.html", {"error": "Mot de passe incorrect"})
 
-    return render(request, 'manage_users/index.html')
-
-
-def main(request):
-    error = False
-    message = ""
-    if request.method == "POST":
-        print("HEY HOW")
-        first_name = request.POST.get('first_name', None)
-        last_name = request.POST.get('last_name', None)
-        email = request.POST.get('email', None)
-        password = request.POST.get('password', None)
-        role = request.POST.get('role', None)
-
-        try:   #POUR VERIFIER SI LE MAIL EST VALIDE#
-            validate_email(email)
-        except:
-            error= True
-    
-
-        print( "NEW POST:", first_name,last_name,email,role,password, ) #POUR TESTER SI LA REQUETE POST MARCHE#
-
-        context = {
-            'error' : error,
-            'message': message
-        }
-        if utilisateur.objects.filter(email=email).exists():
-            return render(request,'manage_users/main.html',{"error": "cet email est deja utilise !"})
-        
-        try:
-          contact = utilisateur(first_name=first_name, last_name=last_name, email=email, password=password, role=role)
-          contact.save()
-          contact= utilisateur()
-          print("enregistrement reussie") #VERIFIER SI LES UTILISATEUR SON BIEN ENREGISTRER#
-        except  Exception as e :
-            print("echec") #RENVOI UN MESSAGE D'ECHEC  DANS LA CONSOLE SI NON#
-
-    return render(request, 'manage_users/main.html')
+    return render(request, "manage_users/index.html")
 
 
 
 def temp(request):
     projects = projet.objects.all()
-    members = membre.objects.all()
+    members = utilisateur.objects.all()
 
-    if request.method == 'POST' :
-        print("HEY HOW")
-        title = request.POST.get('title', None)
-        description = request.POST.get('description', None)
-        project_id = request.POST.get('project_as', None)
-        assigned_to_id = request.POST.get('assigned_to', None)
-        date = request.POST.get('date', None)
+    if request.method == 'POST':
+        form_type = request.POST.get('form_type')
 
-        print( "NEW POST:", title,description,project_id,assigned_to_id,date, ) #POUR TESTER SI LA REQUETE POST MARCHE#
-        project = projet.objects.filter(id=project_id).first() if project_id else None
-        member =membre.objects.filter(id=assigned_to_id).first() if assigned_to_id else None
-        
-        tache = Todo(title=title, description=description, project_as=project,assigned_to=member, date=date)
-        tache.save()
-        tache= Todo()
+        if form_type == "ajout_utilisateur":
+            first_name = request.POST.get("first_name")
+            email = request.POST.get("email")
+            password = request.POST.get("password")
+            poste = request.POST.get("poste")
+            role = request.POST.get("role")  # chef_projet ou membre
 
-        print("enregistrement reussie") #VERIFIER SI LES UTILISATEUR SON BIEN ENREGISTRER#
+            utilisateur.objects.create(
+                first_name=first_name,
+                email=email,
+                password=password,  #  penser à hasher le mot de passe plus tard
+                poste=poste,
+                role=role
+            )
+            messages.success(request, "Utilisateur ajouté avec succès !")
+            return redirect("temp")
 
-        return redirect('temp')
-        
-    return render(request, 'manage_users/temp.html')
+        if form_type == "task":
+            title = request.POST.get('title')
+            description = request.POST.get('description')
+            project_as_id = request.POST.get('project_as')
+            assigned_to_id = request.POST.get('assigned_to')
+            date = request.POST.get('date')
+            priority = request.POST.get('priority')
 
-def projet_create(request):
-    projects = projet.objects.all()
-    members = membre.objects.all()
+            print("NEW TASK:", title, description, project_as_id, assigned_to_id, date, priority)
 
-    if request.method == 'POST' :
-        print("HEY HOW wow")
-        name_project = request.POST.get('name_project')
-        description_project = request.POST.get('description_project')
-        start_date = request.POST.get('start_date')
-        end_date = request.POST.get('end_date')
-        member_ids = request.POST.get('member_project')
+            if not title:
+                print("Erreur : titre vide")
+                return redirect('temp')
 
-        print( "NEW POST:",name_project,description_project,start_date,end_date,member_ids, ) #POUR TESTER SI LA REQUETE POST MARCHE#
+            project = projet.objects.filter(id=project_as_id).first() if project_as_id else None
+            member = utilisateur.objects.filter(id=assigned_to_id).first() if assigned_to_id else None
 
-        project = projects.objects.create(name_project=name_project, description_project=description_project, start_date=start_date,end_date=end_date)
+            Todo.objects.create(
+                title=title,
+                description=description,
+                project_as=project,
+                assigned_to=member,
+                date=date,
+                priority=priority
+            )
 
-        if member_ids :
-            project.member_project.set(member_ids)
-
-            project.save()
-            print("enregistrement reussie") #VERIFIER SI LES UTILISATEUR SON BIEN ENREGISTRER#
+            print("Tâche enregistrée avec succès")
             return redirect('temp')
 
-        
-    return render(request, 'manage_users/temp.html')
+        elif form_type == "project":
+            name_project = request.POST.get('name_project')
+            description_project = request.POST.get('description_project')
+            start_date = request.POST.get('start_date')
+            end_date = request.POST.get('end_date')
+            member_ids = request.POST.getlist('member_project')
+
+            print("NEW PROJECT:", name_project, description_project, start_date, end_date, member_ids)
+
+            project = projet.objects.create(
+                name_project=name_project,
+                description_project=description_project,
+                start_date=start_date,
+                end_date=end_date
+            )
+
+            if member_ids:
+                project.member_project.set(member_ids)
+
+            print("Projet enregistré avec succès")
+            return redirect('temp')
+
+    return render(request, 'manage_users/temp.html', {
+        'projects': projects,
+        'members': members
+    })
+
+
+
+       
 
 
 

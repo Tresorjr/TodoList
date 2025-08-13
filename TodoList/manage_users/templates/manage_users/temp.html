@@ -634,107 +634,119 @@
         </section>
     </main>
 
-    <!-- Modales -->
-    <div id="modal-new-task" class="modal">
-        <div class="modal-content">
-            <a href="#" class="modal-close">×</a>
-            <h2>Créer une nouvelle tâche</h2>
-            <form class="modal-form" method="post">
-                {% csrf_token %}
-                <div class="form-group">
-                    <label>Nom de la tâche</label>
-                    <input type="text"  placeholder="Ex: Développer la page d'accueil" name="title">
+    <!-- MODAL NOUVELLE TÂCHE -->
+<div id="modal-new-task" class="modal">
+    <div class="modal-content">
+        <a href="#" class="modal-close">×</a>
+        <h2>Créer une nouvelle tâche</h2>
+        <form class="modal-form" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="form_type" value="task"> <!-- important -->
 
-                </div>
-                <div class="form-group">
-                    <label>Description</label>
-                    <textarea rows="4" placeholder="Décrivez les détails de la tâche..." name="description"></textarea>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Projet associé</label>
-                        <select id = "project" name="project_as">
-                            
-                            <option>Sélectionner un projet</option>
-                            {%for project in projects %}
-                            <option value="{{ project.id }}">{{ project.name_project }}</option>
-                            {% endfor %}
-                            
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Membre assigné</label>
-                        <select id="assigned_to" name="assigned_to">
-                            <option>Sélectionner un membre</option>
-                            {% for member in members %}
-                            <option value="">{{ member.member_name }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Date limite</label>
-                        <input type="date" name="date">
-                    </div>
-                    <div class="form-group">
-                        <label>Priorité</label>
-                        <select id = "priority" name="priority">
-                            <option>Basse</option>
-                            <option>Moyenne</option>
-                            <option>Haute</option>
-                            <option>Critique</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-actions">
-                    <a href="#" class="btn btn-secondary">Annuler</a>
-                    <button type="submit" class="btn btn-primary">Créer la tâche</button>
-                </div>
-            </form>
-        </div>
-    </div>
+            <div class="form-group">
+                <label>Nom de la tâche</label>
+                <input type="text" placeholder="Ex: Développer la page d'accueil" name="title" required>
+            </div>
 
-    <div id="modal-new-project" class="modal">
-        <div class="modal-content">
-            <a href="#" class="modal-close">×</a>
-            <h2>Créer un nouveau projet</h2>
-            <form class="modal-form" method="post" >
-                {% csrf_token %}
+            <div class="form-group">
+                <label>Description</label>
+                <textarea rows="4" placeholder="Décrivez les détails de la tâche..." name="description" required></textarea>
+            </div>
+
+            <div class="form-row">
                 <div class="form-group">
-                    <label>Nom du projet</label>
-                    <input type="text" placeholder="Ex: Site Web Corporate" name="name_project">
-                </div>
-                <div class="form-group">
-                    <label>Description</label>
-                    <textarea rows="4" placeholder="Décrivez le projet..." id="description_project" name="description_project"></textarea>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Date de début</label>
-                        <input type="date">
-                    </div>
-                    <div class="form-group">
-                        <label>Date de fin</label>
-                        <input type="date">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>Membres associés</label>
-                    <div class="checkbox-group">
-                        {% for member in members %}
-                        <label><input type="checkbox" name = member_project value="{{ member.id }}"> {{ member.full_name }}</label>
+                    <label>Projet associé</label>
+                    <select name="project_as" required>
+                        <option value="">Sélectionner un projet</option>
+                        {% for project in projects %}
+                        <option value="{{ project.id }}">{{ project.name_project }}</option>
                         {% endfor %}
-                        <label><input type="checkbox">rosilia</label>
-                    </div>
+                    </select>
                 </div>
-                <div class="form-actions">
-                    <a href="#" class="btn btn-secondary">Annuler</a>
-                    <button type="submit" class="btn btn-success">Créer le projet</button>
+
+                <div class="form-group">
+                    <label>Membre assigné</label>
+                    <select name="assigned_to">
+                        <option value="">Sélectionner un membre</option>
+                        {% for member in members %}
+                        <option value="{{ member.id }}">{{ member.fist_name }}</option>
+                        {% endfor %}
+                    </select>
                 </div>
-            </form>
-        </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Date limite</label>
+                    <input type="date" name="date" required>
+                </div>
+                <div class="form-group">
+                    <label>Priorité</label>
+                    <select name="priority">
+                        <option value="Basse">Basse</option>
+                        <option value="Moyenne">Moyenne</option>
+                        <option value="Haute">Haute</option>
+                        <option value="Critique">Critique</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <a href="#" class="btn btn-secondary">Annuler</a>
+                <button type="submit" class="btn btn-primary">Créer la tâche</button>
+            </div>
+        </form>
     </div>
+</div>
+
+    <!-- MODAL NOUVEAU PROJET -->
+<div id="modal-new-project" class="modal">
+    <div class="modal-content">
+        <a href="#" class="modal-close">×</a>
+        <h2>Créer un nouveau projet</h2>
+        <form class="modal-form" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="form_type" value="project"> <!-- important -->
+
+            <div class="form-group">
+                <label>Nom du projet</label>
+                <input type="text" placeholder="Ex: Site Web Corporate" name="name_project" required>
+            </div>
+
+            <div class="form-group">
+                <label>Description</label>
+                <textarea rows="4" placeholder="Décrivez le projet..." name="description_project" required></textarea>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Date de début</label>
+                    <input type="date" name="start_date" required>
+                </div>
+                <div class="form-group">
+                    <label>Date de fin</label>
+                    <input type="date" name="end_date" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Membres associés</label>
+                <div class="checkbox-group">
+                    <label>
+                        <input type="checkbox" name="member_project" value="">
+                        <section>hekko</section>
+                    </label>
+                    
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <a href="#" class="btn btn-secondary">Annuler</a>
+                <button type="submit" class="btn btn-success">Créer le projet</button>
+            </div>
+        </form>
+    </div>
+</div>
 
     <div id="modal-add-member" class="modal">
         <div class="modal-content">
@@ -742,18 +754,17 @@
             <h2>Ajouter un membre</h2>
             <form class="modal-form" method="post">
                 {% csrf_token %}
+                <input type="hidden" name="form_type" value="ajout_utilisateur">
                 <div class="form-row">
                     <div class="form-group">
                         <label>Nom complet</label>
-                        <input type="text" id="member_name" name="member_name">
+                        <input type="text" id="first_name" name="first_name">
                     </div>
                     <div class="form-group">
                         <label>Rôle</label>
                         <select id="role" name="role">
-                            <option>Chef de projet</option>
-                            <option>Développeur</option>
-                            <option>Designer</option>
-                            <option>Testeur</option>
+                            <option value="membre">Admin</option>
+                            <option value="chef_projet">membre_simple</option>
                         </select>
                     </div>
                 </div>
@@ -761,9 +772,15 @@
                     <label>Email</label>
                     <input type="email" id="email" name="email">
                 </div>
+
                 <div class="form-group">
-                    <label>Téléphone</label>
-                    <input type="tel" id="tel" name="tel">
+                    <label>Poste occupé</label>
+                   <input type="text" name="poste">
+                </div>
+
+                <div class="form-group">
+                    <label>Mot de Passe</label>
+                    <input type="password" id="password" name="password">
                 </div>
                 <div class="form-actions">
                     <a href="#" class="btn btn-secondary">Annuler</a>
